@@ -21,7 +21,7 @@
         /// <summary>
         /// Defines a contract implemented by <see cref="TwitterGateway"/>
         /// </summary>
-        private readonly IStream _streamGateway;
+        private readonly IStream _twitterGateway;
 
         /// <summary>
         /// For testing purpose only - to control rate limit
@@ -31,12 +31,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="TotalV2SampleStream"/> class.
         /// </summary>
-        /// <param name="streamGateway"></param>
+        /// <param name="twitterGateway">An API service</param>
         /// <param name="logger">A Microsoft logger for logging</param>
-        public TotalV2SampleStream(IStream streamGateway, ILogger<TotalV2SampleStream> logger)
+        public TotalV2SampleStream(IStream twitterGateway, ILogger<TotalV2SampleStream> logger)
         {
             this._logger = logger;
-            this._streamGateway = streamGateway;
+            this._twitterGateway = twitterGateway;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@
             {
                 try
                 {
-                    using StreamReader _reader = await this._streamGateway.ReadV2SampleStreamAsync();
+                    using StreamReader _reader = await this._twitterGateway.ReadV2SampleStreamAsync();
 
                     int _totalCount = 0;
                     Object _lock = new();
