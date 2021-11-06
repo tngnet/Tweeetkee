@@ -96,12 +96,12 @@
                                 _startTime = DateTime.Now;
                             }
 
-                            // This to control rate limit - for testing purpose
-                            if ((_currTime - _initTime).TotalSeconds >= _capTime)
-                            {
-                                Console.WriteLine("===============Stop==============");
-                                return Result.Ok();
-                            }
+                            //// This to control rate limit - for testing purpose
+                            //if ((_currTime - _initTime).TotalMinutes >= _capTime)
+                            //{
+                            //    Console.WriteLine("===============Stop==============");
+                            //    return Result.Ok();
+                            //}
                         }
                     }
                     return Result.Ok();

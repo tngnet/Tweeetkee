@@ -29,7 +29,7 @@
         /// <returns>A task</returns>
         public async Task<Result> RunAsync()
         {
-            return await this._streamService.RunAsync(Interval.Second, 1);
+            return await this._streamService.RunAsync(Interval.Minute, 1);
         }
     }
 }
