@@ -12,7 +12,7 @@
     public class App
     {
         /// <summary>
-        /// Defines the instance of <see cref="IStreamService"/> implementation
+        /// Defines a collection of <see cref="IStreamService"/> implementation
         /// </summary>
         private readonly IEnumerable<IStreamService> _streamServices;
 
