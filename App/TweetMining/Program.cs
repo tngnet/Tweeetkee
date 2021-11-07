@@ -39,9 +39,11 @@
 
             _services.AddLogging(builder => builder.AddConsole())
                 .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Error)
+                .AddTransient<AverageV2SampleStream>()
                 .AddTransient<TotalV2SampleStream>();
 
             _services.AddTransient<IStreamService, TotalV2SampleStream>();
+            _services.AddTransient<IStreamService, AverageV2SampleStream>();
 
             _services.AddTransient<IStream, TwitterGateway>();
 

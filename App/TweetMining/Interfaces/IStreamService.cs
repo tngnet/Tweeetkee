@@ -10,11 +10,16 @@
     public interface IStreamService
     {
         /// <summary>
-        /// Start mining streaming tweet data then display calculation total result on console as configured
+        /// Define a type of an operation
         /// </summary>
-        /// <param name="interval">Date time interval for displaying number of tweets on console</param>
-        /// <param name="frequency">how often for displaying number of tweets on console</param>
+        public OperationType OperationType { get; }
+
+        /// <summary>
+        /// Define a contract
+        /// </summary>
+        /// <param name="interval">Type of time interval</param>
+        /// <param name="frequency">Number of interval</param>
         /// <returns>A task</returns>
-        Task<Result> RunAsync(Interval interval, int frequency);
+        Task<Result> RunAsync(IntervalType interval, int frequency);
     }
 }

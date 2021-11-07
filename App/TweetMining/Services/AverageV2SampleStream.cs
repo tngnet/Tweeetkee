@@ -9,10 +9,7 @@
     using System.Threading.Tasks;
     using TweetMining.Common;
 
-    /// <summary>
-    /// Read live sample stream data from Twitter and display counts result on console
-    /// </summary>
-    public class TotalV2SampleStream : IStreamService
+    public class AverageV2SampleStream : IStreamService
     {
         /// <summary>
         /// Defines a contract implemented by <see cref="Logger"/>
@@ -27,14 +24,14 @@
         /// <summary>
         /// Define a type of an operation
         /// </summary>
-        public OperationType OperationType => OperationType.Total;
+        public OperationType OperationType => OperationType.Average;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TotalV2SampleStream"/> class.
         /// </summary>
         /// <param name="twitterGateway">An API service</param>
         /// <param name="logger">A Microsoft logger for logging</param>
-        public TotalV2SampleStream(IStream twitterGateway, ILogger<TotalV2SampleStream> logger)
+        public AverageV2SampleStream(IStream twitterGateway, ILogger<AverageV2SampleStream> logger)
         {
             this._logger = logger;
             this._twitterGateway = twitterGateway;
@@ -60,13 +57,14 @@
                     using StreamReader _reader = await this._twitterGateway.ReadV2SampleStreamAsync();
 
                     int _totalCount = 0;
+                    int _timeIncrement = frequency;
                     Object _lock = new();
                     List<string> _collection = new();
                     DateTime _startTime = DateTime.Now;
                     DateTime _initTime = DateTime.Now;
                     bool _isInit = true;
 
-                    Console.WriteLine($"Start calculating total tweets per every {frequency} {interval}");
+                    Console.WriteLine($"Start calculating average tweets per every {frequency} {interval}");
 
                     while (_reader != null && !_reader.EndOfStream)
                     {
@@ -93,10 +91,16 @@
                             {
                                 int _itemCount = _collection.Count;
                                 _totalCount += _itemCount;
+                                int _averageCount = _totalCount / _timeIncrement;
 
-                                Util.ConsoleWrite(_currTime, _itemCount, _totalCount);
+                                Util.ConsoleWrite(_currTime, _averageCount, _totalCount);
+
+                                // reset
                                 _collection = new List<string>();
                                 _startTime = DateTime.Now;
+
+                                // calculate average number
+                                _timeIncrement += frequency;
                             }
 
                             // This to control rate limit - for testing purpose only

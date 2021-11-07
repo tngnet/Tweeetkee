@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
 
-    public enum Interval
+    public enum IntervalType
     {
         [Description("none")]
         None,

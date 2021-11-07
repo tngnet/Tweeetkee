@@ -1,5 +1,7 @@
 ﻿namespace TweetMining
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using TweetMining.Enums;
     using TweetMining.Models;
@@ -12,24 +14,27 @@
         /// <summary>
         /// Defines the instance of <see cref="IStreamService"/> implementation
         /// </summary>
-        private readonly IStreamService _streamService;
+        private readonly IEnumerable<IStreamService> _streamServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
-        /// <param name="streamService">The <see cref="SampleService"/></param>
-        public App(IStreamService streamService)
+        /// <param name="streamServices">A collection of implementation of <see cref="IStreamService"/></param>
+        public App(IEnumerable<IStreamService> streamServices)
         {
-            this._streamService = streamService;
+            this._streamServices = streamServices;
         }
 
         /// <summary>
-        /// This method will be invoked by <see cref="Program"/> class to start the application
+        /// This method will find the match of operation services and execute to perform the task
         /// </summary>
         /// <returns>A task</returns>
         public async Task<Result> RunAsync()
         {
-            return await this._streamService.RunAsync(Interval.Minute, 1);
+            return await this._streamServices
+                .Where(i => i.OperationType == OperationType.Average)
+                .SingleOrDefault()
+                .RunAsync(IntervalType.Minute, 1);
         }
     }
 }
