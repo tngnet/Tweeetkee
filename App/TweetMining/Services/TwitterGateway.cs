@@ -31,8 +31,8 @@
         public async Task<StreamReader> ReadV2SampleStreamAsync()
         {
             HttpClient _client = this._clientFactory.CreateClient(Client.Twitter);
-            Stream stream = await _client.GetStreamAsync(TwitterUrl.V2SampleStream).ConfigureAwait(false);
-            return new StreamReader(stream);
+            Stream _stream = await _client.GetStreamAsync(TwitterUrl.V2SampleStream).ConfigureAwait(false);
+            return new StreamReader(_stream);
         }
     }
 }
