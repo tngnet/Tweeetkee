@@ -44,16 +44,15 @@
 
             _services.AddTransient<IStreamService, TotalV2SampleStream>();
             _services.AddTransient<IStreamService, AverageV2SampleStream>();
-
             _services.AddTransient<IStream, TwitterGateway>();
 
-            _services.AddHttpClient(Client.V2Sample, (HttpClient client) =>
+            _services.AddHttpClient(Client.Twitter, (HttpClient client) =>
             {
                 client.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["BearerToken"]}");
             });
 
-            _services.AddTransient<App>();
+            _services.AddSingleton<App>();
 
             return _services;
         }

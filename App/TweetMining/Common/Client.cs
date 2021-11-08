@@ -2,6 +2,6 @@
 {
     public class Client
     {
-        public const string V2Sample = "V2_SAMPLE";
+        public const string Twitter = "TWITTER";
     }
 }
